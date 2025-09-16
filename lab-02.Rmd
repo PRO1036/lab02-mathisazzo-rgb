@@ -22,50 +22,65 @@ plastic_waste <- plastic_waste %>%
   filter(plastic_waste_per_cap < 3.5)
 ```
 
-
 ## Exercices
 
 ### Exercise 1
 
 ```{r plastic-waste-continent}
-# insert code here
+plastic_waste <- plastic_waste %>%
+  filter(plastic_waste_per_cap < 3.5)
+ggplot(plastic_waste, aes(x = plastic_waste_per_cap)) +
+  geom_histogram() +
+  facet_wrap(~ continent, ncol = 2)
 ```
 
 ### Exercise 2
 
 ```{r plastic-waste-density}
-# insert code here
+ggplot(plastic_waste, aes(x = plastic_waste_per_cap,fill = continent)) +
+  geom_density(adjust = 1,
+               alpha = 0.5)
 ```
 
-Réponse à la question...
+Décrivez pourquoi le reglage de la couleur (`color` et `fill`) et le réglage de la transparence (`alpha`) ne se trouvent pas au même endroit ? L’un étant réglé dans `aes` et l’autre dans `geom_density() :`
+
+La couleur (*color*) est définie dans `aes()` car nous voulons distinguer les continents par des couleurs différentes. En revanche, dans `geom_density()`, nous plaçons l’argument `alpha` en dehors de `aes()`, car nous souhaitons que toutes les courbes aient la même transparence. Si nous l’avions mis dans `aes()`, la transparence aurait varié en fonction du continent.
 
 ### Exercise 3
 
 Boxplot:
 
 ```{r plastic-waste-boxplot}
-# insert code here
+ggplot(plastic_waste, aes(x = continent,
+                  y = plastic_waste_per_cap)) +
+  geom_boxplot()
+ 
 ```
 
 Violin plot:
 
 ```{r plastic-waste-violin}
-# insert code here
+ggplot(plastic_waste, aes(x = continent, y = plastic_waste_per_cap)) +
+  geom_violin()
 ```
 
-Réponse à la question...
+Qu’est ce que les violin plots permettent de voir sur les données que les boxplot ne permettent pas ?
+
+Les violin plots permettent de voir pour quelle proportion de dechets par habitants chaques pays possede le plus par exemple l'afrique a en majoritée une consommation de 0,05 Kg de dechets par jours
 
 ### Exercise 4
 
-
 ```{r plastic-waste-mismanaged}
-# insert code here
+ggplot(plastic_waste,
+       aes(x = plastic_waste_per_cap,
+           y = mismanaged_plastic_waste_per_cap,
+           color = continent)) +
+  geom_point()
 ```
 
-Réponse à la question...
+Il semble que, de manière générale, plus la quantité de déchets par habitant augmente, plus la quantité de déchets non gérés par habitant augmente également. Cette tendance varie toutefois selon les continents : elle apparaît plus marquée en Afrique et un peu moins prononcée en Europe, par exemple.
 
 ### Exercise 5
-
 
 ```{r plastic-waste-population-total}
 # insert code here
